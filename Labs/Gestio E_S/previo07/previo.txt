@@ -1,0 +1,47 @@
+1.
+El programa escribe fin ejecución.
+
+
+2.
+./es1 < entrada.txt
+
+
+3.
+-rwxr-xr-x 1 miquel miquel  8552 nov 14 19:16 es1
+-rw-r--r-- 1 miquel miquel  1062 abr 19  2013 es1.c
+-rwxr-xr-x 1 miquel miquel 12848 nov 14 19:16 es2
+-rw-r--r-- 1 miquel miquel  1418 abr 19  2013 es2.c
+-rwxr-xr-x 1 miquel miquel  8600 nov 14 19:16 es3
+-rw-r--r-- 1 miquel miquel   880 nov 13  2013 es3.c
+-rwxr-xr-x 1 miquel miquel  8512 nov 14 19:16 es4
+-rw-r--r-- 1 miquel miquel  1089 abr 19  2013 es4.c
+-rwxr-xr-x 1 miquel miquel  8376 nov 14 19:16 es5
+-rw-r--r-- 1 miquel miquel    22 ene 27  2012 es5.c
+-rwxr-xr-x 1 miquel miquel  8512 nov 14 19:16 es6
+-rw-r--r-- 1 miquel miquel    99 ene 27  2012 es6.c
+-rwxr-xr-x 1 miquel miquel  8472 nov 14 19:16 es7
+-rw-r--r-- 1 miquel miquel    93 ene 30  2012 es7.c
+-rwxr-xr-x 1 miquel miquel  8560 nov 14 19:16 es8
+-rw-r--r-- 1 miquel miquel   552 ene 30  2012 es8.c
+La comanda grep es selecciona d’entre uns elements aquells que contenen “es”.
+
+
+4.
+ps -u | grep bash o ps -e | grep bash
+
+
+5.
+S’escriuren 4 i 5 bytes respectivament. En el primer cas s’escriuen els carácters ascii corresponents a la traducció del nombre 10562 a hexadecimal (0x29 i 0x42), que són els caràcters ‘)’ i ‘B’.
+En el segon cas s’escriu correctement el nomnbre.
+Sortida:
+
+Entero en representacion interna. Voy a escribir 4 bytes:
+B)
+Entero en formato string. Voy a escribir 5 bytes:
+10562
+
+
+6.
+a) Les funcions read_driver_1 i read_driver_2 respectivament.
+b) Son les identificados del dispositiu, s’utilitzen per a associar el dispositiu en qüestió amb un codi d’accés concret. El DRIVER1 utilitza major=249 i minor=0, i el DRIVER2 utilitza major=250 i minor=0
+

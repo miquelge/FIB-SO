@@ -1,0 +1,35 @@
+ENTRADA / SALIDA
+
+B.b) - Mensaje oculto observado tras descodificarlo:
+     RESPUESTA: Felicidades! Prueba superada! :-)
+
+PREGUNTAS CORTAS:
+
+A) - Forma de crear la pipe con nombre "mynamedpipe".
+     RESPUESTA: mknod mynamedpipe p
+
+B) - Comando para crear un soft-link al fichero "MSGcode7".
+     RESPUESTA: ln -s ./MSGcode7 ./sl
+
+   - Comando para crear un hard-link al fichero "MSGcode7".
+     RESPUESTA: ln ./MSGcode7 ./hl
+
+C) - Comando para consultar el numero de inode de sl, hl y MSGcode7. Son iguales?
+     RESPUESTA: stat sl
+		stat hl
+		stat MSGcode7
+
+D) - Diferencias de rendimiento y los motivos.
+     RESPUESTA: Amb la comanda namei veiem la ruta d'unfitxer fin 		s al punt final.
+	namei sl:
+		f: sl
+		 l sl -> ./MSGcode7
+   		  d .
+  		  - MSGcode7
+	namei hl:
+		f: hl
+		 - hl
+	Per tant obserbe que el recorregut amb el hard link és molt 		més  ràpid i eficient ja que té un inode que apunta 		directament a MSGcode7
+
+E) - Comando utilizado para saber los i-nodes libres
+     RESPUESTA: df -i

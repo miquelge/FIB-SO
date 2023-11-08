@@ -1,0 +1,21 @@
+
+1 - 
+Es mostra en el fitxer /proc/PID/stat, que consta d’un seguit de nombres. El 10é indica el nombre de minor page faults, el 12é indica el nombre de major page faults del procés.
+-------
+
+2 -
+vmstat 1
+Es mostra a les columnes 9 i 10, que tenen com a indicador si i so respectivament.
+-------
+
+3 -
+./fib 10 : 0.001s
+./fib 20 : 0.001s
+./fib 30 : 0.020s
+./fib 40 : 0.910s
+./fib 50 : 1m50.152s
+-------
+
+4 -
+Lo hará con un valor del nice de 10
+-------

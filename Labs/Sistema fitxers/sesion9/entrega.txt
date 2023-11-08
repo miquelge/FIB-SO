@@ -1,0 +1,63 @@
+>>>PREGUNTA 69. Contesta a las siguientes preguntas en el fichero “entrega.txt”
+ 
+ Han dado error los comandos:
+ otorrillas@ubuntu:~/A$ ln -s D $Home/A/F
+ln: failed to create symbolic link `/A/F': No such file or directory
+
+otorrillas@ubuntu:~/A$ ln $HOME/A $HOME/A/H
+ln: `/home/otorrillas/A': hard link not allowed for directory
+
+El primero porque se ha intentado hacer un soft link de un archivo o directorio que no existe, el segundo porque solo
+se puede hacer hard links sobre ficheros, pero no sobre directorios.
+
+--
+
+Hacemos stat sobre las diferentes variables creadas:
+
+otorrillas@ubuntu:~/A$ stat D
+  File: `D'
+  Size: 25              Blocks: 8          IO Block: 4096   regular file
+Device: 801h/2049d      Inode: 948541      Links: 2
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/otorrillas)   Gid: ( 1000/otorrillas)
+Access: 2013-12-10 19:05:18.519259986 +0100
+Modify: 2013-12-10 19:05:18.519259986 +0100
+Change: 2013-12-10 19:06:53.779262085 +0100
+ Birth: -
+ 
+Tiene 2 links, el del propio archivo y el del link creado.
+ 
+otorrillas@ubuntu:~/A$ stat E
+  File: `E' -> `/home/otorrillas/A'
+  Size: 18              Blocks: 0          IO Block: 4096   symbolic link
+Device: 801h/2049d      Inode: 948553      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/otorrillas)   Gid: ( 1000/otorrillas)
+Access: 2013-12-10 19:05:55.231260794 +0100
+Modify: 2013-12-10 19:05:31.239260266 +0100
+Change: 2013-12-10 19:05:31.239260266 +0100
+ Birth: -
+ 
+E es un solo link al directorio A, y no lo referencia nadie más, por lo que solo aparezca que tenga un link.
+
+otorrillas@ubuntu:~/A$ stat G
+  File: `G'
+  Size: 25              Blocks: 8          IO Block: 4096   regular file
+Device: 801h/2049d      Inode: 948541      Links: 2
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/otorrillas)   Gid: ( 1000/otorrillas)
+Access: 2013-12-10 19:05:18.519259986 +0100
+Modify: 2013-12-10 19:05:18.519259986 +0100
+Change: 2013-12-10 19:06:53.779262085 +0100
+ Birth: -
+
+G es un archivo con 2 links, el del propio archivo y el del hard link creado con la última instrucción ( ln D $HOME/A/G)
+
+---
+otorrillas@ubuntu:~/A$ ln -s $HOME/A/link1 link1
+otorrillas@ubuntu:~/A$ cat link1
+cat: link1: Too many levels of symbolic links
+
+Establece un limite máximo de symbolic links.
+
+----
+
+
+

@@ -1,0 +1,112 @@
+
+1.
+
+Se puede saber usando el comando df
+
+Filesystem     1K-blocks    Used Available Use% Mounted on
+/dev/sda1       19478204 5647600  12834508  31% /
+udev              501308       4    501304   1% /dev
+tmpfs             205220     792    204428   1% /run
+none                5120       0      5120   0% /run/lock
+none              513048     160    512888   1% /run/shm
+
+Se puede saber añadiendo la opción -i:
+	df -i
+
+Para verlo en un sistema al cual estamos acostumbrados (GBs, MBs...) se usa la opción
+	df -h
+
+	Filesystem      Size  Used Avail Use% Mounted on
+	/dev/sda1        19G  5.4G   13G  31% /
+	udev            490M  4.0K  490M   1% /dev
+	tmpfs           201M  792K  200M   1% /run
+	none            5.0M     0  5.0M   0% /run/lock
+	none            502M  160K  501M   1% /run/shm
+
+______________
+2.
+
+El primer link creado es un soft link y el segundo es un hard link.
+
+otorrillas@ubuntu:~$ stat pr.txt
+  File: `pr.txt'
+  Size: 19              Blocks: 8          IO Block: 4096   regular file
+Device: 801h/2049d      Inode: 949058      Links: 2
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/otorrillas)   Gid: ( 1000/otorrillas)
+Access: 2013-12-06 17:54:58.256138524 +0100
+Modify: 2013-12-06 17:54:58.256138524 +0100
+Change: 2013-12-06 17:55:11.860138859 +0100
+ Birth: -
+
+pr.txt es un "regular file", su inodo es 949058 y su número de links es 2.
+
+--
+llas@ubuntu:~$ stat sl_pr
+  File: `sl_pr' -> `pr.txt'
+  Size: 6               Blocks: 0          IO Block: 4096   symbolic link
+Device: 801h/2049d      Inode: 949061      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/otorrillas)   Gid: ( 1000/otorrillas)
+Access: 2013-12-06 17:55:05.736138708 +0100
+Modify: 2013-12-06 17:55:05.736138708 +0100
+Change: 2013-12-06 17:55:05.736138708 +0100
+ Birth: -
+
+sl_pr es un "symbolic link", su inodo es el 949061 y su número de links es 1.
+
+--
+
+otorrillas@ubuntu:~$ stat hl_pr
+  File: `hl_pr'
+  Size: 19              Blocks: 8          IO Block: 4096   regular file
+Device: 801h/2049d      Inode: 949058      Links: 2
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/otorrillas)   Gid: ( 1000/otorrillas)
+Access: 2013-12-06 17:54:58.256138524 +0100
+Modify: 2013-12-06 17:54:58.256138524 +0100
+Change: 2013-12-06 17:55:11.860138859 +0100
+ Birth: -
+
+
+La información es exactamente la misma que para el fichero al cual apunta (pr.txt), ya que a diferencia del soft link que sólo apunta a un fichero con ese nombre, el hard link es apuntar directamente al fichero.
+
+--
+otorrillas@ubuntu:~$ cat sl_pr 
+esto es una prueba
+otorrillas@ubuntu:~$ cat hl_pr
+esto es una prueba
+otorrillas@ubuntu:~$ namei sl_pr 
+f: sl_pr
+ l sl_pr -> pr.txt
+   - pr.txt
+otorrillas@ubuntu:~$ namei hl_pr 
+f: hl_pr
+ - hl_pr
+otorrillas@ubuntu:~$ readlink sl_pr 
+pr.txt
+otorrillas@ubuntu:~$ readlink hl_pr 
+
+Sí. Se observan diferencias en el namei y en el readlink. En el primer caso, las diferencias es que lo que hace primero namei es abrir sl_pr y, al ver que es un link, se redirige a pr.txt y lo abre. En cambio, para hl_pr, al ser un hard link, como este ya contiene la misma info que pr.txt, no hace falta ir a ningún otro archivo.
+Para el readlink, es simple: sl_pr sí contiene un link, hl_pr sólo es una copia de la información de pr.txt.
+
+--
+
+otorrillas@ubuntu:~$ rm pr.txt 
+otorrillas@ubuntu:~$ cat sl_pr 
+cat: sl_pr: No such file or directory
+otorrillas@ubuntu:~$ cat hl_pr
+esto es una prueba
+otorrillas@ubuntu:~$ namei sl_pr 
+f: sl_pr
+ l sl_pr -> pr.txt
+pr.txt - No such file or directory
+otorrillas@ubuntu:~$ namei hl_pr 
+f: hl_pr
+ - hl_pr
+otorrillas@ubuntu:~$ readlink sl_pr 
+pr.txt
+otorrillas@ubuntu:~$ readlink hl_pr 
+
+Para el soft link, el fichero pr.txt ha desaparecido, en cambio el hard link sigue guardando toda la info de este fichero.
+
+--
+
+

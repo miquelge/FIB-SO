@@ -1,0 +1,26 @@
+1.
+mknod pipe1 p
+cat > pipe1[0]
+
+cat < pipe[1]
+
+2.
+No, ya que no son procesos padre e hijo y no tienen la misma tabla de canales.
+
+
+3.
+close(0);
+dup(4); 
+close(4);
+
+4.
+createSocket:
+Definimos la familia del socket en el struct creado y el path del mismo al directorio (lo recibimos como parámetro).
+La llamada a socket nos devuelve el canal en el que se ha abierto el socket creado.
+El binemos proporciona una dirección para referencias el socket que hemos creado.
+El listen pondrá al socket a la espera de conexiones entrantes
+
+serverConnection:
+Nos devuelve el canal del socket en qüestión.
+La llamada a accept pondrá en el parámetro socketAddr con la dirección del socket del cliente que lo llama y en addrSize el tamaño de esta.
+
